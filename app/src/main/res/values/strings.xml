@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Task</string>
+
+      <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyBISHD0Kc1ffFbw2to8Y_dalXeb0Kpqn20</string>
+</resources>
