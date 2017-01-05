@@ -1,7 +1,7 @@
 package com.example.ok.task.LoginRegister;
 
 
-import android.annotation.SuppressLint;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -22,7 +22,8 @@ import android.widget.Toast;
 
 import com.example.ok.task.Fonts.TypefaceUtil;
 import com.example.ok.task.LoginRegister.uitilt.AsyncHttpClient;
-import com.example.ok.task.MainActivity;
+
+import com.example.ok.task.Map.MainActivity;
 import com.example.ok.task.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -58,7 +59,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         items();
         click();
 
-        TypefaceUtil.overrideFonts(getActivity().getApplicationContext(), view);//font
+        TypefaceUtil.overrideFonts(getActivity(), view);//font
 
         SharedPreferences pref = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
         String id = pref.getString("name", "");
@@ -124,17 +125,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         editor.putString("pass", pass.getText().toString());
                         editor.putString("UserId", response.getString("message"));
                         editor.commit();
-                        Intent intent = new Intent(getActivity().getApplication(), MainActivity.class);
-                        intent.putExtra("id", response.getString("message"));
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                      //  intent.putExtra("id", response.getString("message"));
 
-                        startActivity(intent);
+                     startActivity(intent);
 
                     } else {
 
                         Toast.makeText(getActivity().getApplicationContext(), "الاسم او كلمة المرور خظأ", Toast.LENGTH_LONG).show();
 
                     }
-                    // String[] items = response.getString("message").split(",");
 
                 } catch (Exception ex) {
 

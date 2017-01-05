@@ -4,7 +4,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ok.task.MainActivity">
+    tools:context="com.example.ok.task.Map.MainActivity">
 
     <fragment
         android:id="@+id/map"
@@ -13,4 +13,32 @@
         android:layout_height="wrap_content"
 
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+        <TextView
+            android:id="@+id/Location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:background="@drawable/text"
+            android:minLines="2"
+            android:padding="3dp"
+            />
+    <Button
+
+        android:layout_marginTop="5dp"
+        android:textColor="#fff"
+        android:id="@+id/inter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/butoncarve"
+        android:text="طريقى"
+        android:layout_marginBottom="5dp"
+
+        /></LinearLayout>
 </RelativeLayout>

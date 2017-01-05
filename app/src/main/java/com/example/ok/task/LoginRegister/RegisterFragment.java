@@ -5,8 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.ok.task.Fonts.TypefaceUtil;
 import com.example.ok.task.LoginRegister.uitilt.AsyncHttpClient;
-import com.example.ok.task.MainActivity;
+import com.example.ok.task.Map.MainActivity;
 import com.example.ok.task.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -51,7 +49,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_register, container, false);
-        TypefaceUtil.overrideFonts(getActivity().getApplicationContext(), view);
+        TypefaceUtil.overrideFonts(getActivity(), view);
 
         Items();
         click();
@@ -159,8 +157,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         editor.putString("UserId", response.getString("message"));
 
                         editor.commit();
-                        Intent intent = new Intent(getActivity().getApplication(), MainActivity.class);
-                        intent.putExtra("id", response.getString("message"));
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+
 
                         startActivity(intent);
 

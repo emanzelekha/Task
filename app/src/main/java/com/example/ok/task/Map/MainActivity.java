@@ -1,4 +1,4 @@
-package com.example.ok.task;
+package com.example.ok.task.Map;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -19,8 +19,12 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ok.task.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,8 +46,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     Geocoder geocoder;
     List<Address> addresses;
     int gps = 0;
+    TextView Location;
+    LatLng l1 = null, l = null;
+    Button Way;
+    Marker marker = null, PostionMark = null;
 
-    Marker marker=null;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -51,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //cheack network connection
+        Way = (Button) findViewById(R.id.inter);
+        Location = (TextView) findViewById(R.id.Location);
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -139,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             if (location != null) {
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 1000 * 60 * 1, this);//update ever 10meter
-                LatLng l1 = new LatLng(location.getLatitude(), location.getLongitude());
+                l1 = new LatLng(location.getLatitude(), location.getLongitude());
                 // System.out.println(l1+"tg;rlthrht");
                 try {
                     addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 11);
@@ -149,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
 
-                mMap.addMarker(new MarkerOptions()
+                PostionMark = mMap.addMarker(new MarkerOptions()
                         .position(l1)
                         .title(addresses.get(0).getAddressLine(2))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker4))
@@ -169,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             //add marker dynamic
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 public void onMapClick(LatLng point) {
-                    LatLng l = new LatLng(point.latitude, point.longitude);
+                    l = new LatLng(point.latitude, point.longitude);
                     try {
                         addresses = geocoder.getFromLocation(point.latitude, point.latitude, 1);
 
@@ -183,12 +192,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     marker = mMap.addMarker(new MarkerOptions()
                             .position(l)
                             .title(addresses.get(0).getAddressLine(2))
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker4))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1))
                             .snippet(addresses.get(0).getCountryName())
                             .visible(true)
                     );
+                    Location.setText("Lat:  " + point.latitude + "\n" + "Long: " + point.longitude);
 
+                }
+            });
+            Way.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Route route = new Route();
+                    if (l1 != null && l != null) {
+                        route.drawRoute(mMap, MainActivity.this, l1, l, false, "en");
+                    } else {
 
+                    }
                 }
             });
 
@@ -198,18 +218,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onLocationChanged(Location location) {//to get location on moving
-        LatLng l = new LatLng(location.getLatitude(), location.getLongitude());
+        l1 = new LatLng(location.getLatitude(), location.getLongitude());
         try {
             addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mMap.clear();//to clear last postion
-        mMap.addMarker(new MarkerOptions()
-                .position(l)
+        if (PostionMark != null) {
+            PostionMark.remove();
+        }
+        PostionMark = mMap.addMarker(new MarkerOptions()
+                .position(l1)
                 .title(addresses.get(0).getAddressLine(2))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker4))
                 .snippet(addresses.get(0).getCountryName())
                 .visible(true)
         );
