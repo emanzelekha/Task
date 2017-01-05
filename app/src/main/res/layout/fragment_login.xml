@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/MainColor"
+            android:textSize="25dp"
+            android:id="@+id/t1"
+            android:layout_marginTop="50dp"
+            android:text="تسجيل دخول"
+            android:gravity="center" />
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/name"
+            android:background="@drawable/texte"
+            android:hint="اسم المستخدم"
+            android:textColorHint="#fff"
+            android:drawablePadding="15dp"
+            android:textColor="#fff"
+            android:drawableRight="@drawable/user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center|right" />
+        <EditText
+            android:inputType="textPassword"
+            android:drawablePadding="15dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/pass"
+            android:background="@drawable/text"
+            android:hint="كلمة المرور"
+            android:textColorHint="#fff"
+            android:textColor="#fff"
+            android:drawableRight="@drawable/lock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center|right" />
+
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/test1"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <Button
+                    android:textColor="#fff"
+                    android:layout_marginRight="1dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="انشاء حساب"
+                    android:id="@+id/reg"
+                    android:background="@drawable/login"
+                    />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/test"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Button
+                    android:textColor="#fff"
+                    android:layout_marginLeft="1dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reg1"
+
+
+                    android:background="@drawable/logine"
+
+                    android:text="تسجيل دخول"
+                   />
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

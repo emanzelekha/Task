@@ -42,13 +42,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     Geocoder geocoder;
     List<Address> addresses;
     int gps = 0;
-    Marker marker;
+
+    Marker marker=null;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //cheack network connection
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -59,10 +61,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Toast.makeText(MainActivity.this, "من فضلك تحقق من الاتصال بالانترنت", Toast.LENGTH_LONG).show();
             finish();
         }
+//////////////////////////////////////////////////////////////////////////////////
 
-
-        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
+        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);//LocationManger
+//cheack gps
         boolean gps_enabled = false;
 
 
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             gps = 1;
             geocoder = new Geocoder(this, Locale.getDefault());
         }
-
+///////////////////////////////////add map fragment to activity////////////////////////////////////////////////
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -115,13 +117,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            //  mMap.setMyLocationEnabled(true);
-
-            // Show rationale and request permission.
-
             mMap = googleMap;
 
-            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);//maptype
 ///to be in egypt only
             CameraPosition googlePlex = CameraPosition.builder()
                     .target(new LatLng(30.045206, 31.236495))
@@ -132,20 +130,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(googlePlex));
 
-
+//permision
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            if (gps == 1) {
-                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-               
+
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            if (location != null) {
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 1000 * 60 * 1, this);//update ever 10meter
                 LatLng l1 = new LatLng(location.getLatitude(), location.getLongitude());
                 // System.out.println(l1+"tg;rlthrht");
@@ -159,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 mMap.addMarker(new MarkerOptions()
                         .position(l1)
-
                         .title(addresses.get(0).getAddressLine(2))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker4))
                         .snippet(addresses.get(0).getCountryName())
@@ -172,35 +163,42 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .zoom(8)
                         .build();
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    public void onMapClick(LatLng point) {
-                        LatLng l = new LatLng(point.latitude, point.longitude);
-                        try {
-                            addresses = geocoder.getFromLocation(point.latitude, point.latitude, 1);
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        Marker marker = mMap.addMarker(new MarkerOptions()
-                                .position(l)
-                                .title(addresses.get(0).getAddressLine(2))
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker4))
-                                .snippet(addresses.get(0).getCountryName())
-                                .visible(true)
-                        );
-
-                    }
-                });
+            } else {
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);//if location return null
             }
+            //add marker dynamic
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                public void onMapClick(LatLng point) {
+                    LatLng l = new LatLng(point.latitude, point.longitude);
+                    try {
+                        addresses = geocoder.getFromLocation(point.latitude, point.latitude, 1);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (marker != null) {
+                        marker.remove(); //remove to add only one marker
+                    }
+
+                    marker = mMap.addMarker(new MarkerOptions()
+                            .position(l)
+                            .title(addresses.get(0).getAddressLine(2))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker4))
+                            .snippet(addresses.get(0).getCountryName())
+                            .visible(true)
+                    );
+
+
+                }
+            });
+
         }
     }
 
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(Location location) {//to get location on moving
         LatLng l = new LatLng(location.getLatitude(), location.getLongitude());
-        System.out.println(l + "tg;rlthrht");
         try {
             addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
@@ -211,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addMarker(new MarkerOptions()
                 .position(l)
                 .title(addresses.get(0).getAddressLine(2))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker4))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker1))
                 .snippet(addresses.get(0).getCountryName())
                 .visible(true)
         );

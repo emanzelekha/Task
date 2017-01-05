@@ -1,0 +1,104 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="5dp"
+
+    android:background="#fff">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/MainColor"
+            android:textSize="25dp"
+
+            android:id="@+id/t1"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="50dp"
+            android:text="انشاء حساب"
+            android:gravity="center" />
+
+        <EditText
+            android:textSize="14dp"
+            android:id="@+id/name"
+            android:background="@drawable/texte"
+            android:hint="الاســــــــــــــم"
+            android:textColorHint="#fff"
+            android:drawablePadding="10dp"
+            android:textColor="#fff"
+            android:drawableRight="@drawable/user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center|right"
+
+            />
+        <EditText
+
+            android:inputType="textEmailAddress"
+            android:textSize="14dp"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/email"
+            android:background="@drawable/text"
+            android:hint="البريد الالكترونى"
+            android:textColorHint="#fff"
+            android:textColor="#fff"
+            android:drawableRight="@drawable/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center|right" />
+        <EditText
+            android:inputType="phone"
+            android:textSize="14dp"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/phone"
+            android:background="@drawable/text"
+            android:hint="رقم الهاتف"
+            android:textColorHint="#fff"
+            android:textColor="#fff"
+            android:drawableRight="@drawable/phoner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center|right" />
+        <EditText
+            android:inputType="textPassword"
+            android:textSize="14dp"
+            android:drawablePadding="5dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/pass"
+            android:background="@drawable/texted"
+            android:hint="   كلمة المرور"
+            android:textColorHint="#fff"
+            android:textColor="#fff"
+            android:drawableRight="@drawable/lock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center|right" />
+        <Button
+            android:layout_marginTop="28dp"
+            android:textColor="#fff"
+            android:id="@+id/inter"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/butoncarve"
+            android:text="تــــــسجـــيـل"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
